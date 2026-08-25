@@ -1,0 +1,127 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-radar-green: #16a34a;
+  --color-radar-yellow: #eab308;
+  --color-radar-red: #dc2626;
+  --color-radar-neutral: #94a3b8;
+}
+
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --muted: #64748b;
+
+  --green: #16a34a;
+  --green-soft: #dcfce7;
+  --yellow: #ca8a04;
+  --yellow-soft: #fef9c3;
+  --red: #dc2626;
+  --red-soft: #fee2e2;
+  --neutral: #94a3b8;
+  --neutral-soft: #f1f5f9;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1120;
+    --surface: #111827;
+    --border: #1f2937;
+    --text: #e5e7eb;
+    --muted: #94a3b8;
+
+    --green-soft: #052e16;
+    --yellow-soft: #422006;
+    --red-soft: #450a0a;
+    --neutral-soft: #1e293b;
+    --green: #4ade80;
+    --yellow: #facc15;
+    --red: #f87171;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-feature-settings: 'tnum' 1;
+}
+
+.surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+}
+
+.muted { color: var(--muted); }
+
+/* Статусные цвета — единый источник для ячеек, бейджей и легенды. */
+.st-green   { background: var(--green-soft);   color: var(--green);   }
+.st-yellow  { background: var(--yellow-soft);  color: var(--yellow);  }
+.st-red     { background: var(--red-soft);     color: var(--red);     }
+.st-other_schedule,
+.st-no_data { background: var(--neutral-soft); color: var(--muted);   }
+
+.dot-green   { background: var(--green);   }
+.dot-yellow  { background: var(--yellow);  }
+.dot-red     { background: var(--red);     }
+.dot-other_schedule,
+.dot-no_data { background: var(--neutral); }
+
+/* Поля фильтров: нативный select, чтобы на телефоне открывался системный пикер. */
+select {
+  width: 100%;
+  min-width: 0;
+  appearance: none;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.45rem 2rem 0.45rem 0.6rem;
+  font: inherit;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  cursor: pointer;
+  /* Стрелка нарисована фоном: у нативной нет управления цветом в тёмной теме. */
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+    linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: right 1.05rem center, right 0.75rem center;
+  background-size: 0.3rem 0.3rem, 0.3rem 0.3rem;
+  background-repeat: no-repeat;
+}
+select:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: -1px;
+}
+
+/* Таблица-радар: закреплённая первая колонка. */
+.radar-scroll { overflow-x: auto; }
+.radar-table { border-collapse: separate; border-spacing: 0; }
+.radar-table th, .radar-table td { border-bottom: 1px solid var(--border); }
+.radar-sticky {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+}
+.radar-table thead th { position: sticky; top: 0; z-index: 3; background: var(--surface); }
+.radar-table thead th.radar-sticky { z-index: 4; }
+
+/* На телефоне длинное название лавки съедало всю ширину, и в кадр не попадало
+   ни одного дня. Обрезаем его многоточием — полное имя остаётся в title. */
+@media (max-width: 640px) {
+  .radar-sticky {
+    max-width: 8.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .radar-sticky > a {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

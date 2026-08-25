@@ -1,0 +1,37 @@
+{
+  "name": "radar-otkrytki",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Радар открытий — дашборд контроля открытия лавок",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "prebuild": "npm run snapshot || echo '! Снимок не пересобран — используется закоммиченный src/generated/snapshot.json'",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "snapshot": "tsx scripts/build-snapshot.ts",
+    "seed": "tsx scripts/seed.ts",
+    "etl:attendance": "tsx scripts/etl-attendance.ts",
+    "etl:showcase": "tsx scripts/etl-showcase.ts",
+    "test": "tsx --test src/lib/*.test.ts src/lib/parsers/*.test.ts"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "googleapis": "^176.0.0",
+    "next": "^16.3.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.8",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^22.15.29",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.5",
+    "tailwindcss": "^4.1.8",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}
